@@ -150,13 +150,9 @@ h1 {
     color: black;
 }
 
-.recipe-section{
-    position: relative;
-    z-index: -1;
-
-}
-
-.recipe-card{
-    position: relative;
-    z-index: 3;
+.notification {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 44%;
 }

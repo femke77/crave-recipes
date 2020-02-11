@@ -1,6 +1,7 @@
 $(document).ready(function() {
   $("#dash").show();
   $("#logout").show();
+  $(".notification").hide();
 
   // On search click (logged in)
   $("#searchButton").on("click", function() {
@@ -57,12 +58,15 @@ $(document).ready(function() {
 
   //save recipe
   $(document).on("click", "#saveRecipe", function() {
-    console.log("save clicked");
     var currentRecipe = $(this).attr("data-id");
     $.get("/user").then(function(user) {
       var userId = user.id;
       $.post("/api/save/" + userId + "/" + currentRecipe, {}).then(function() {
         console.log("saved");
+        $(".notification").show();
+        setTimeout(function() {
+          $(".notification").hide();
+        }, 3000);
       });
     });
   });
@@ -334,5 +338,6 @@ $(document).ready(function() {
   //removes the closing X in the upper right of modal
   $(document.body).on("click", ".delete", function() {
     $(".modal").removeClass("is-active");
+    $(".notification").hide();
   });
 }); //end doc ready fn
