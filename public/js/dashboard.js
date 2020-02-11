@@ -2,7 +2,7 @@ $(document).ready(function() {
   $("#dash").show();
   $("#logout").show();
 
-  // On search button click (logged in)
+  // On search click (logged in)
   $("#searchButton").on("click", function() {
     // Grab input from search
     var keyword = $("#searchInput")
@@ -20,8 +20,8 @@ $(document).ready(function() {
         const element = response[i];
 
         $("#recipesBody").append(
-          `<div class="column is-one-third recipe-card" id="${element.title}">
-                <div class="card large">
+          `<div class="column is-one-third" id="${element.id}">
+                <div class="card large recipe-card" >
                     <div class="card-image">
                         <figure class="image">
                             <!-- image  -->
@@ -39,6 +39,7 @@ $(document).ready(function() {
                         </div>
                         <div class="content">
                             <p>Serves: ${element.servings}</p>
+
                         </div>
                     </div>
                 </div>
@@ -54,7 +55,7 @@ $(document).ready(function() {
   });
   // End Search Click
 
-  //save recipe to favorites
+  //save recipe
   $(document).on("click", "#saveRecipe", function() {
     console.log("save clicked");
     var currentRecipe = $(this).attr("data-id");
@@ -78,10 +79,10 @@ $(document).ready(function() {
       for (let i = 0; i < response.length; i++) {
         const element = response[i];
 
-        // Append recipe cards to recipe container
+        // Append recipe cards  to recipe container
         $("#recipesBody").append(
-          `<div class="column is-one-third recipe-card" id="${element.title}">
-                    <div class="card large ">
+          `<div class="column is-one-third " id="${element.id}">
+                    <div class="card large recipe-card ">
                         <div class="card-image">
                             <figure class="image">
                                 <!-- image  -->
@@ -112,29 +113,25 @@ $(document).ready(function() {
     });
   });
 
-  //unsave recipe from favorites
-  $(document).on("click", "#removeSaved", function() {
-    console.log("removed");
-  });
-
-  // Start Card Click to display recipe
+  // Card click to display recipe detail view
   $(document.body).on("click", ".recipe-card", function() {
     //id = title in this case. This has to be corrected b/c title is not unique in db
-    var keyword = this.getAttribute("id");
+    var recipeId = $(this)
+      .parent()
+      .attr("id");
+    console.log(recipeId);
     $.get("/user")
       .then(function(user) {
-        // eslint-disable-next-line no-unused-vars
-        var userId = user.id;
-        return userId;
+        return user.id;
       })
       .then(function(userId) {
         // Send the PUT request.
-        $.ajax("/api/search/" + keyword, {
+        $.ajax("/api/recipe/" + recipeId, {
           type: "GET"
         })
           .then(function(response) {
             $("#recipesBody").empty();
-            const element = response[0];
+            const element = response;
             // Handling ingredients list
             const valuesIng = Object.values(element.ingredients);
             //attach recipe data to modal for use with notes
@@ -274,6 +271,11 @@ $(document).ready(function() {
             });
           });
       });
+  });
+
+  //remove recipe from saved
+  $(document).on("click", "#removeSaved", function() {
+    console.log("removed");
   });
 
   $("#saveNote").on("click", function() {

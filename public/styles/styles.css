@@ -149,3 +149,14 @@ h1 {
 .valid-class{
     color: black;
 }
+
+.recipe-section{
+    position: relative;
+    z-index: -1;
+
+}
+
+.recipe-card{
+    position: relative;
+    z-index: 3;
+}
