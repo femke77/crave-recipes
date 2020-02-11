@@ -27,7 +27,7 @@ router.get("/api/saved/:userId", (req, res) => {
     }
   })
     .then(function (user) {
-      return (recipes = user.getSaves());
+      return user.getSaves();
     })
     .then(function (recipes) {
       res.json(recipes);

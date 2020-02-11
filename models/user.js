@@ -32,13 +32,6 @@ module.exports = function(sequelize, DataTypes) {
         len: [1]
       }
     }
-    // lastLogin: {
-    //   type: DataTypes.DATE
-    // },
-    // status: {
-    //   type: DataTypes.ENUM("active", "inactive"),
-    //   defaultValue: "active"
-    // }
   });
 
   User.associate = function(models) {
