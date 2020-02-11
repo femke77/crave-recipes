@@ -1,6 +1,6 @@
 # recipe-keeper
 
-Recipe-keeper, officially known as Crave Recipes, is a web application for people who like to cook and bake. The user can search for recipes based on keywords like "cookies" or "mexican" to find new recipes by type of food or cuisine. They can also submit new recipes to our database. For features such as saving recipes and adding personal notes to the recipes, they can sign up for a free account and save as many recipes as they like!
+Crave Recipes is a web application for people who like to cook and bake. The user can search for recipes based on keywords like "cookies" or "mexican" to find new recipes by type of food or cuisine. They can also submit new recipes to our database. For features such as saving recipes and adding personal notes to the recipes, they can sign up for a free account and save as many recipes as they like!
 
 ![crave image](https://user-images.githubusercontent.com/23327932/74110747-f1369680-4b43-11ea-8022-7b7e27316311.png)
 
