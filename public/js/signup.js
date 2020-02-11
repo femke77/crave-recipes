@@ -11,6 +11,8 @@ $(document).ready(function() {
 
   var form = $("#signup");
   form.validate({
+    errorClass: "error-class",
+    validClass: "valid-class",
     rules: {
       email: "required",
       firstname: "required",
@@ -23,7 +25,7 @@ $(document).ready(function() {
       firstname: "First name is required",
       lastname: "Last name is required",
       username: "Username is required",
-      password: "Password is required"
+      password: "Password of at least 6 characters is required"
     }
   });
 

@@ -141,3 +141,11 @@ h1 {
     font-family: 'Pacifico', cursive;
     font-size: 53pt;
 }
+
+.error-class{
+    color: red;
+}
+
+.valid-class{
+    color: black;
+}

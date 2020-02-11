@@ -23,7 +23,12 @@ module.exports = function(sequelize, DataTypes) {
   });
 
   Submission.associate = function(models) {
-    Submission.belongsTo(models.User); //fk name is UserId
+    Submission.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: true
+      }
+    }); //fk name is UserId
   };
+
   return Submission;
 };

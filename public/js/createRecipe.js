@@ -36,8 +36,6 @@ $(document).ready(function() {
     if (form.valid()) {
       console.log("valid form");
 
-      //get the user id from session
-
       var ingredientJSON = {};
       var count = 0;
 
@@ -45,35 +43,40 @@ $(document).ready(function() {
       $(".ingredient").each(function() {
         ingredientJSON["ingredient_" + count++] = $(this).val();
       });
-
-      console.log(ingredientJSON);
-      //make a new recipe object with user id
-      let newRecipe = {
-        title: $("#title")
-          .val()
-          .trim(),
-        servings: $("#servings").val(),
-        image: $("#image")
-          .val()
-          .trim(),
-        category: $("#category").val(),
-        dishType: $("#dishType").val(),
-        source: $("#source")
-          .val()
-          .trim(),
-        instructions: $("#instructions")
-          .val()
-          .trim(),
-        ingredients: ingredientJSON,
-        //userid has to come from the passport session:
-        UserId: 1
-      };
-
-      console.log(newRecipe);
-      //send to database with post
-      $.post("/api/submission", newRecipe, function() {
-        console.log("posted");
-      });
+      //get the user id from session
+      $.get("/user")
+        .then(function(user) {
+          return user.id;
+        })
+        .then(function(userId) {
+          //make a new recipe object with user id
+          let newRecipe = {
+            title: $("#title")
+              .val()
+              .trim(),
+            servings: $("#servings").val(),
+            image: $("#image")
+              .val()
+              .trim(),
+            category: $("#category").val(),
+            dishType: $("#dishType").val(),
+            source: $("#source")
+              .val()
+              .trim(),
+            instructions: $("#instructions")
+              .val()
+              .trim(),
+            ingredients: ingredientJSON,
+            UserId: userId
+          };
+          console.log(newRecipe);
+          //send to database with post
+          $.post("/api/submission", newRecipe, function() {
+            console.log("posted");
+            //try to go to dashboard & if not logged in will go to home page
+            window.location.href = "/dashboard";
+          });
+        });
     }
   });
 });

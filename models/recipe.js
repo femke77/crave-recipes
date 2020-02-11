@@ -17,6 +17,7 @@ module.exports = function(sequelize, DataTypes) {
     category: DataTypes.STRING,
     dishType: DataTypes.STRING,
     source: DataTypes.STRING
+    // accepted: DataTypes.DATE
   });
 
   //We associate the user's id with the recipe so we know who created/submitted the recipe

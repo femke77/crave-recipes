@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: null,
       unique: true,
       validate: {
-        len: [1]
+        len: [6, 20]
       }
     }
   });
