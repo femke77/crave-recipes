@@ -1,10 +1,20 @@
-# recipe-keeper
+# crave-recipes
+
+Welcome to Crave Recipes Version 2! (see recipe-keeper repo for v1)
 
 Crave Recipes is a web application for people who like to cook and bake. The user can search for recipes based on keywords like "cookies" or "mexican" to find new recipes by type of food or cuisine. They can also submit new recipes to our database. For features such as saving recipes and adding personal notes to the recipes, they can sign up for a free account and save as many recipes as they like!
 
 ![crave image](https://user-images.githubusercontent.com/23327932/74110747-f1369680-4b43-11ea-8022-7b7e27316311.png)
 
 ![image](https://user-images.githubusercontent.com/23327932/74110789-48d50200-4b44-11ea-9368-4886e6d77e2f.png)
+
+## Updates
+
+On new recipe creation, recipes go into a separate table, called submissions, instead of directly going into the table that serves the public. This way Crave developers can review the recipe content first and then move the recipe into the main table if they approve it.
+
+Minor modifications to our look.
+
+Signup page now has frontend validation.
 
 ## Tech/framework
 

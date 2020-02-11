@@ -25,7 +25,7 @@ router.get("/user", isLoggedIn, function(req, res) {
   res.json(req.user);
 });
 
-//on landing page, render the index.hbs file with x number of  random recipes from the db
+//on landing page, render the index.hbs file with x number of random recipes from the db
 router.get("/", (req, res) => {
   db.Recipe.findAll({
     order: db.sequelize.random(),
@@ -42,15 +42,6 @@ router.get("/", (req, res) => {
 router.get("/create", (req, res) => {
   //show form to make a new recipe
   res.render("createRecipe");
-});
-
-router.get("/recipe", (req, res) => {
-  //show all saved recipes with their notes
-  res.render("recipe");
-});
-
-router.get("/signup", (req, res) => {
-  res.render("signup");
 });
 
 router.get("*", (req, res) => {
