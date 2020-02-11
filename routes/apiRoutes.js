@@ -9,12 +9,12 @@ var db = require("../models");
 const { Op } = require("sequelize");
 
 //Post a new recipe to the database
-router.post("/api/newrecipe", (req, res) => {
+router.post("/api/submission", (req, res) => {
   if (!req.body) {
     res.status("400").send("req body is required.");
     return;
   }
-  db.Recipe.create(req.body).then(function () {
+  db.Submission.create(req.body).then(function () {
     res.status(200).end();
   });
 });

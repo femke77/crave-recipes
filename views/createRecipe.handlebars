@@ -12,7 +12,6 @@
             <div class="column">
                 <form class="recipe">
                     <div id="recipeForm">
-
                         <div class="field">
                             <label class="label">Title</label>
                             <div class="control">
@@ -20,9 +19,8 @@
                                     placeholder="e.g Mom's Famous Chicken Noodle Soup" required>
                             </div>
                         </div>
-
-
-                        <div class="field">
+                        </br>
+                        <div class="field is-grouped">
                             <div class="control">
                                 <div class="select">
                                     <select id="servings" class="required" name="servings">
@@ -37,29 +35,41 @@
                                         <option value="16">16</option>
                                         <option value="20">20</option>
                                         <option value="24">24</option>
+                                        <option value="28">28</option>
+                                        <option value="32">32</option>
+                                        <option value="34">34</option>
+                                        <option value="38">38</option>
+                                        <option value="42">42</option>
+                                        <option value="44">44</option>
+                                        <option value="50">50</option>                                      
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="field">
-                            <div class="control">
-                                <div class="select">
-                                    <select id="category" class="required" name="category">
-                                        <option value="">Cuisine</option>
-                                        <option value="American">American</option>
-                                        <option value="Mexican">Mexican</option>
-                                        <option value="Mediterranean">Mediterranean</option>
-                                        <option value="Italian">Italian</option>
-                                        <option value="French">French</option>
-                                        <option value="German">German</option>
-                                        <option value="Indian">Indian</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="field">
-                            <div class="control">
-                                <div class="select">
+                                <div class="control">
+                                    <div class="select">
+                                        <select id="category" class="required" name="category">
+                                            <option value="">Cuisine</option>
+                                            <option value="American">American</option>
+                                            <option value="Mexican">Mexican</option>
+                                            <option value="Mediterranean">Mediterranean</option>
+                                            <option value="Italian">Italian</option>
+                                            <option value="French">French</option>
+                                            <option value="German">German</option>
+                                            <option value="Indian">Indian</option>
+                                            <option value="African">African</option>
+                                            <option value="Chinese">Chinese</option>
+                                            <option value="Japanese">Japanese</option>
+                                            <option value="Greek">Greek</option>
+                                            <option value="Korean">Korean</option>
+                                            <option value="Spanish">Spanish</option>
+                                            <option value="Ethiopian">Ethiopian</option>
+                                            <option value="Middle Eastern">Middle Eastern</option>
+                                            <option value="Russian">Russian</option>
+                                        </select>
+                                    </div>
+                                </div> 
+                                <div class="control">
+                                    <div class="select">
                                     <select id="dishType" class="required" name="dishType">
                                         <option value="">Dish Type</option>
                                         <option value="Main Dish">Main Dish</option>
@@ -67,16 +77,21 @@
                                         <option value="Soup">Soup</option>
                                         <option value="Appetizer">Appetizer</option>
                                         <option value="Beverage">Beverage</option>
+                                        <option value="Dessert">Dessert</option>
+                                        <option value="Cocktail">Cocktail</option>
+                                        <option value="Salad">Salad</option>
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
+                        </br>                        
                         <div class="field">
                             <label class="label">Source</label>
                             <div class="control">
                                 <input class="input" id="source" type="text" placeholder="e.g Taste of Home ">
                             </div>
                         </div>
+                        </br>
                         <div class="field">
                             <label class="label">Ingredients</label>
                             <div class="control is-expanded">
@@ -96,6 +111,7 @@
                                 </a>
                             </p>
                         </div>
+                        </br>
                         <div class="field">
                             <label class="label">Instructions</label>
                             <div class="control is-expanded">
@@ -112,8 +128,6 @@
                         <div class="control">
                             <button class="button is-info" id="submitRecipe">Submit</button>
                         </div>
-                        {{!-- End Card 3  --}}
-
                     </div>
                 </form>
             </div>

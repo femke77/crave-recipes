@@ -21,7 +21,7 @@ $(document).ready(function() {
     },
     messages: {
       title: "Please specify the title.",
-      servings: "Specify how many servings this recipe makes.",
+      servings: "Specify number of servings.",
       category: "Please specify the cuisine type.",
       dishType: "Please specify the type of dish.",
       ingredient: "Please specify ingredient.",
@@ -71,7 +71,7 @@ $(document).ready(function() {
 
       console.log(newRecipe);
       //send to database with post
-      $.post("/api/newrecipe", newRecipe, function() {
+      $.post("/api/submission", newRecipe, function() {
         console.log("posted");
       });
     }

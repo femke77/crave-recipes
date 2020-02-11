@@ -136,3 +136,8 @@ h2 {
 ::selection {
     background-color: #DEF4FF
 }
+
+
+.error {
+    color: red;
+}
