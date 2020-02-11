@@ -43,7 +43,7 @@ $(document).ready(function() {
       $(".ingredient").each(function() {
         ingredientJSON["ingredient_" + count++] = $(this).val();
       });
-      //get the user id from session
+      //get the user id from session else null is allowed
       $.get("/user")
         .then(function(user) {
           return user.id;

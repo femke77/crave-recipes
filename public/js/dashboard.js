@@ -2,7 +2,7 @@ $(document).ready(function() {
   $("#dash").show();
   $("#logout").show();
 
-  // On Search Click
+  // On search button click (logged in)
   $("#searchButton").on("click", function() {
     // Grab input from search
     var keyword = $("#searchInput")
@@ -10,7 +10,7 @@ $(document).ready(function() {
       .trim();
     $("#searchInput").val("");
 
-    // // Send the GET request.
+    //Send the GET request.
     $.ajax("/api/search/" + keyword, {
       type: "GET"
     }).then(function(response) {
@@ -39,25 +39,23 @@ $(document).ready(function() {
                         </div>
                         <div class="content">
                             <p>Serves: ${element.servings}</p>
-
                         </div>
                     </div>
                 </div>
                 <footer class="card-footer">
-                <div >
-                    <button type="submit" data-id="${element.id}" class="button is-info is-centered save">Save Recipe</button>
-                </div>
-                    </footer>
+                  <div >
+                    <a class="card-footer-item" id="saveRecipe" data-id="${element.id}">Save to Faves</a>
+                  </div>
+                </footer>
             </div>`
         ); //end append
-        // $("button").attr("data-id", element.id);
-        // console.log($("button").attr("data-id") + " " + element.title);
       }
     });
   });
   // End Search Click
 
-  $(document).on("click", "button", function() {
+  //save recipe to favorites
+  $(document).on("click", "#saveRecipe", function() {
     console.log("save clicked");
     var currentRecipe = $(this).attr("data-id");
     $.get("/user").then(function(user) {
@@ -80,7 +78,7 @@ $(document).ready(function() {
       for (let i = 0; i < response.length; i++) {
         const element = response[i];
 
-        // Append them to food list
+        // Append recipe cards to recipe container
         $("#recipesBody").append(
           `<div class="column is-one-third recipe-card" id="${element.title}">
                     <div class="card large ">
@@ -106,13 +104,17 @@ $(document).ready(function() {
                         </div>
                     </div>
                     <footer class="card-footer">
-                        <a class="card-footer-item">Remove from Faves</a>
-                        
+                        <a class="card-footer-item" id="removeSaved" data-id="${element.id}">Remove from Faves</a>        
                     </footer>
                 </div>`
         );
       } //end for loop
     });
+  });
+
+  //unsave recipe from favorites
+  $(document).on("click", "#removeSaved", function() {
+    console.log("removed");
   });
 
   // Start Card Click to display recipe
