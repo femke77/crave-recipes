@@ -74,7 +74,7 @@ $(document).ready(function() {
           $.post("/api/submission", newRecipe, function() {
             console.log("posted");
             //try to go to dashboard & if not logged in will go to home page
-            window.location.href = "/dashboard";
+            window.location.replace = "/dashboard";
           });
         });
     }

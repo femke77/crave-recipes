@@ -3,7 +3,7 @@ $(document).ready(function() {
   $("#logout").show();
   $(".notification").hide();
 
-  // On search click (logged in)
+  // On search click logged in version
   $("#searchButton").on("click", function() {
     // Grab input from search
     var keyword = $("#searchInput")
@@ -119,17 +119,16 @@ $(document).ready(function() {
 
   // Card click to display recipe detail view
   $(document.body).on("click", ".recipe-card", function() {
-    //id = title in this case. This has to be corrected b/c title is not unique in db
     var recipeId = $(this)
       .parent()
       .attr("id");
-    console.log(recipeId);
+    //get user id
     $.get("/user")
       .then(function(user) {
         return user.id;
       })
       .then(function(userId) {
-        // Send the PUT request.
+        // Send the GET request with recipeId
         $.ajax("/api/recipe/" + recipeId, {
           type: "GET"
         })
@@ -214,12 +213,12 @@ $(document).ready(function() {
       `
             );
 
-            // Handles recipes list
+            // Handles list of ingredients
             for (let j = 0; j < valuesIng.length; j++) {
               const ing = "<li>" + valuesIng[j] + "</li>";
               $("#recList").append(ing);
             }
-            // Instructions listing
+            // Handles list of instructions
             var instructions = element.instructions;
             var a1 = new Array();
             a1 = instructions.split(".");
@@ -323,6 +322,7 @@ $(document).ready(function() {
     });
   });
 
+  // modal and notification code
   $(document.body).on("click", "#openModal", function() {
     $(".modal").addClass("is-active");
   });
@@ -335,7 +335,7 @@ $(document).ready(function() {
     $(".modal").removeClass("is-active");
   });
 
-  //removes the closing X in the upper right of modal
+  // on click of the closing X in the upper right of modal or notification
   $(document.body).on("click", ".delete", function() {
     $(".modal").removeClass("is-active");
     $(".notification").hide();

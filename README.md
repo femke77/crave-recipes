@@ -18,6 +18,8 @@ Signup page now has frontend validation with more readable errors.
 
 Create recipe feature attaches user id if logged in or null if a non-user and redirects to the dashboard if logged in, or the homepage if not. 
 
+When recipes are saved from dashboard search, the detailed view does not open and a notification appears for 3 seconds. 
+
 ## Tech/framework
 
 Crave Recipes is a Node/Expressjs app. The database is a MySql relational type and we used Sequelize as the ORM. Passport serves as the library for authentication, using bcrypt to hash the passwords. Handlebars serves the front end and Bulma provides most of the styling. 

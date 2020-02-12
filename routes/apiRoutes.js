@@ -72,6 +72,27 @@ router.put("/api/note", (req, res) => {
   });
 });
 
+//get a user's note with the recipe
+router.get("/api/recipe-detailed/:recipeId/:userId", (req, res) => {
+  db.Recipe.findOne({
+    include : [{
+      model: db.Note,
+      where:  {
+        [Op.and]: [
+          {
+            RecipeId: req.params.recipeId
+          },
+          {
+            UserId: req.params.userId
+          }
+        ]
+      }
+    }]
+  }).then(function(recipeWithNote){
+    res.json(recipeWithNote);
+  });
+});
+
 //delete a note
 router.delete("/api/note/:id", (req, res) => {
   db.Note.destroy({
