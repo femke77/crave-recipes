@@ -137,8 +137,12 @@ h2 {
     background-color: #DEF4FF
 }
 
-h1 {
+h1, h2 {
     font-family: 'Pacifico', cursive;
+    
+}
+
+h1 {
     font-size: 53pt;
 }
 

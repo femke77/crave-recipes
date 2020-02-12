@@ -72,7 +72,7 @@ router.put("/api/note", (req, res) => {
   });
 });
 
-//get a recipe with note if ava. 
+//get a recipe with note
 router.get("/api/recipe-detailed/:recipeId", (req, res) => {
   db.Recipe.findOne({
     where: {

@@ -12,13 +12,15 @@ Crave Recipes is a web application for people who like to cook and bake. The use
 
 On new recipe creation, recipes go into a separate table, called submissions, instead of directly going into the table that serves the public. This way Crave developers can review the recipe content first and then move the recipe into the main table if they approve it.
 
-Minor modifications to the look.
+Minor modifications to the look including new fonts.
 
 Signup page now has frontend validation with more readable errors. 
 
 Create recipe feature attaches user id if logged in or null if a non-user and redirects to the dashboard if logged in, or the homepage if not. 
 
 When recipes are saved from dashboard search, the detailed view does not open and a notification appears for 3 seconds. 
+
+New router for getting a recipe and note with a table join.
 
 ## Tech/framework
 
