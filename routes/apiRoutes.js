@@ -72,21 +72,14 @@ router.put("/api/note", (req, res) => {
   });
 });
 
-//get a user's note with the recipe
-router.get("/api/recipe-detailed/:recipeId/:userId", (req, res) => {
+//get a recipe with note if ava. 
+router.get("/api/recipe-detailed/:recipeId", (req, res) => {
   db.Recipe.findOne({
+    where: {
+      id: req.params.recipeId
+    },
     include : [{
       model: db.Note,
-      where:  {
-        [Op.and]: [
-          {
-            RecipeId: req.params.recipeId
-          },
-          {
-            UserId: req.params.userId
-          }
-        ]
-      }
     }]
   }).then(function(recipeWithNote){
     res.json(recipeWithNote);
@@ -114,6 +107,7 @@ router.get("/api/note/:id", (req, res) => {
   });
 });
 
+//get note by recipeId and userId
 router.get("/api/note/:recipeId/:userId", (req, res) => {
   db.Note.findOne({
     where: {
