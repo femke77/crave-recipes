@@ -8,7 +8,7 @@ var db = require("../models");
 
 const { Op } = require("sequelize");
 
-//Post a new recipe to the database
+//Post a new recipe to the database in the submission table
 router.post("/api/submission", (req, res) => {
   if (!req.body) {
     res.status("400").send("req body is required.");
@@ -16,6 +16,19 @@ router.post("/api/submission", (req, res) => {
   }
   db.Submission.create(req.body).then(function () {
     res.status(200).end();
+  });
+});
+
+//Unsaving or unfavoriting a recipe
+router.delete("/api/saved/:userId/:recipeId", (req, res) => {
+  db.User.findOne({
+    where: {
+      id: req.params.userId
+    }
+  }).then(function(user){
+    user.removeSave(req.params.recipeId);
+  }).then(function(){
+    res.status(200).send("save removed");
   });
 });
 
@@ -97,6 +110,26 @@ router.delete("/api/note/:id", (req, res) => {
   });
 });
 
+//delete a note with userId and recipeId. Used whenr removing save
+router.delete("/api/note/:userId/:recipeId", (req, res) => {
+  db.Note.destroy({
+    where: {
+      [Op.and]: [
+        {
+          RecipeId: req.params.recipeId
+        },
+        {
+          UserId: req.params.userId
+        }
+      ]
+    }
+  }).then(function(){
+    res.status("200").send("note deleted");
+  });
+});
+
+
+//find a note by its id 
 router.get("/api/note/:id", (req, res) => {
   db.Note.findOne({
     where: {

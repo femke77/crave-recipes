@@ -118,6 +118,7 @@ $(document).ready(function() {
   });
 
   // Card click to display recipe detail view
+  // this must be moved to a different hbs file
   $(document.body).on("click", ".recipe-card", function() {
     var recipeId = $(this)
       .parent()
@@ -134,7 +135,7 @@ $(document).ready(function() {
       $("#saveNote").data("recipeData", element);
       //attach recipe data to recipeBody div
       $("#recipesBody").data("recipeData", element);
-      //get the note if it exists
+      //get the note and the id if it exists.
       const note = element.Notes.length > 0 ? element.Notes[0].note : "";
       const noteId = element.Notes.length > 0 ? element.Notes[0].id : 0;
       // Append to body
@@ -238,9 +239,27 @@ $(document).ready(function() {
     });
   });
 
-  //remove recipe from saved
+  //remove recipe from favorites. Includes removing the note they stored.
   $(document).on("click", "#removeSaved", function() {
-    console.log("removed");
+    //get recipe id
+    var recipeId = $(this).attr("data-id");
+    $.get("/user").then(function(user) {
+      var userId = user.id;
+      //ajax call to delete
+      $.ajax({
+        type: "delete",
+        url: "/api/saved/" + userId + "/" + recipeId
+      }).then(function() {
+        console.log("removed");
+        $.ajax({
+          type: "delete",
+          url: "/api/note/" + userId + "/" + recipeId
+        }).then(function() {
+          console.log("note deleted");
+          location.reload(true);
+        });
+      });
+    });
   });
 
   $("#saveNote").on("click", function() {
@@ -279,7 +298,7 @@ $(document).ready(function() {
   // modal and notification code
   $(document.body).on("click", "#openModal", function() {
     $(".modal").addClass("is-active");
-    //fill #noteContent with the current note if present
+    //fill modal content with the current note if present
     var noteId = $(this).attr("data-noteId");
     console.log(noteId);
     $.get("/api/note/" + noteId).then(function(note) {

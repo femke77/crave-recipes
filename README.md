@@ -22,6 +22,8 @@ When recipes are saved from dashboard search, the detailed view does not open an
 
 New router for getting a recipe and note with a table join.
 
+Notes are now truly editable. The user's previous note now appears in the user note modal text box.
+
 ## Tech/framework
 
 Crave Recipes is a Node/Expressjs app. The database is a MySql relational type and we used Sequelize as the ORM. Passport serves as the library for authentication, using bcrypt to hash the passwords. Handlebars serves the front end and Bulma provides most of the styling. 

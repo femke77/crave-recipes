@@ -1,15 +1,18 @@
-.card {
-    overflow: hidden
+h1, h2 {
+    font-family: 'Pacifico', cursive;
+    
 }
 
 h1 {
-    font-family: "Zenon Bold Italic", Helvetica, sans-serif;
-    font-size: 60px;
+    font-size: 53pt;
 }
 
 h2 {
-    font-family: "Zenon Bold Italic", Helvetica, sans-serif;
-    font-size: 30px;
+    font-size: 27pt;
+}
+
+.card {
+    overflow: hidden
 }
 
 .card-image {
@@ -135,15 +138,6 @@ h2 {
 
 ::selection {
     background-color: #DEF4FF
-}
-
-h1, h2 {
-    font-family: 'Pacifico', cursive;
-    
-}
-
-h1 {
-    font-size: 53pt;
 }
 
 .error-class{
