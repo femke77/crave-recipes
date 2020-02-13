@@ -165,7 +165,7 @@ $(document).ready(function() {
                 </div>
                 <footer class="card-footer" >
                     <a class="card-footer-item" data-noteId=${noteId} id="openModal">Add or Edit Note</a>
-                    <a class="card-footer-item" id="removeNote">Remove Note</a>
+                    <a class="card-footer-item" data-noteId=${noteId} id="removeNote">Remove Note</a>
                 </footer>
                 </div>
             </div>
@@ -284,9 +284,8 @@ $(document).ready(function() {
     });
   });
 
-  $("#deleteNote").on("click", function() {
-    //get id from element data
-    var noteId = 2;
+  $(document.body).on("click", "#removeNote", function() {
+    var noteId = $(this).attr("data-noteId");
     $.ajax({
       type: "delete",
       url: "/api/note/" + noteId

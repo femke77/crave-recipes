@@ -47,7 +47,7 @@ router.get("/api/saved/:userId", (req, res) => {
     });
 });
 
-//saves the recipeid and userid into the save table as a save.
+//saves the recipeid and userid into the save table as a favorite
 router.post("/api/save/:userId/:recipeId", (req, res) => {
   db.User.findOne({
     where: {
@@ -99,7 +99,7 @@ router.get("/api/recipe-detailed/:recipeId", (req, res) => {
   });
 });
 
-//delete a note
+//delete a note by id 
 router.delete("/api/note/:id", (req, res) => {
   db.Note.destroy({
     where: {
