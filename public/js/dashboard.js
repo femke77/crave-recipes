@@ -130,8 +130,14 @@ $(document).ready(function() {
       const element = response;
       // Handling ingredients list
       const valuesIng = Object.values(element.ingredients);
+      //attach recipe data to modal for use with notes
+      $("#saveNote").data("recipeData", element);
+      //attach recipe data to recipeBody div
+      $("#recipesBody").data("recipeData", element);
+      //get the note if it exists
       const note = element.Notes.length > 0 ? element.Notes[0].note : "";
-      // Append them to food list
+      const noteId = element.Notes.length > 0 ? element.Notes[0].id : 0;
+      // Append to body
       $("#recipesBody").append(
         `<div class="column is-one-quarter">
           <div class="card large">
@@ -156,9 +162,9 @@ $(document).ready(function() {
                     </div>
                     </div>
                 </div>
-                <footer class="card-footer">
-                    <a class="card-footer-item" id="openModal">Add or Edit Note</a>
-                    <a class="card-footer-item">Remove from Faves</a>
+                <footer class="card-footer" >
+                    <a class="card-footer-item" data-noteId=${noteId} id="openModal">Add or Edit Note</a>
+                    <a class="card-footer-item" id="removeNote">Remove Note</a>
                 </footer>
                 </div>
             </div>
@@ -216,7 +222,6 @@ $(document).ready(function() {
                 </div>
                 `
       );
-
       // Handles list of ingredients
       for (let j = 0; j < valuesIng.length; j++) {
         const ing = "<li>" + valuesIng[j] + "</li>";
@@ -256,14 +261,6 @@ $(document).ready(function() {
         type: "put",
         url: "/api/note",
         data: noteObj
-      }).then(function() {
-        $("#userNotes").val(" ");
-        //attache the note id for deletion (not sure of the data's lifespan though)
-        $.get("/api/note/" + noteObj.RecipeId + "/" + noteObj.UserId).then(
-          function(note) {
-            $("#recipesBody").data("noteData", note);
-          }
-        );
       });
     });
   });
@@ -282,6 +279,14 @@ $(document).ready(function() {
   // modal and notification code
   $(document.body).on("click", "#openModal", function() {
     $(".modal").addClass("is-active");
+    //fill #noteContent with the current note if present
+    var noteId = $(this).attr("data-noteId");
+    console.log(noteId);
+    $.get("/api/note/" + noteId).then(function(note) {
+      if (note) {
+        $("#userNotes").append(note.note);
+      }
+    });
   });
 
   $(document.body).on("click", "#closeModal", function() {
