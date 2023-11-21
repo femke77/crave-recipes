@@ -19,6 +19,11 @@ router.post("/api/submission", (req, res) => {
   });
 });
 
+router.post("/api/newrecipe", (req,res)=> {
+  db.Recipe.create(req.body).then(function() {
+    res.status(201).end();
+  })
+})
 //Unsaving or unfavoriting a recipe
 router.delete("/api/saved/:userId/:recipeId", (req, res) => {
   db.User.findOne({

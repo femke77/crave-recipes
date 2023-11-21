@@ -1,7 +1,6 @@
 //To use this code, add a btn with id btn and insert the api key
-
 // The following code is for increasing the size of the recipe database by hitting spoonacular api
-var apiKey = "";
+var apiKey = "8291ac263908494dbb724a8ba3637f1a";
 var num = 10;
 
 // Button to trigger num more recipes be posted to the mysql database
@@ -51,6 +50,7 @@ $("#btn").on("click", function(event) {
         //user id will added when this is part of a user submission. null okay here for now.
       };
 
+
       //send to database with post
       $.post("/api/newrecipe", newRecipe, function() {
         console.log("posted");
@@ -58,3 +58,5 @@ $("#btn").on("click", function(event) {
     }
   });
 }); //end #btn click for downloading recipes into db
+
+

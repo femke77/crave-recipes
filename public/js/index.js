@@ -196,15 +196,23 @@ $(document).ready(function () {
 
       // START---  instructions listing  WORKING --------------------------------------3 
       var instructions = element.instructions;
-      var a1 = new Array();
-      a1 = instructions.split(".");
-      console.log("length is: " + a1.length);
-      for (let k = 0; k < a1.length - 1; k++) {
-        const instrucDisplay = "<li>" + a1[k] + "</li>";
-        $("#recDirections").append(
-          instrucDisplay
-        );
-      }
+      console.log(instructions);
+   
+      $("#recDirections").append(
+        instructions
+      );
+
+      // let instrucDisplay="";
+      // for (let k = 0; k < a1.length; k++) {
+      //   if (k===a1.length-1){
+      //     instrucDisplay = "<li>" + a1[k] + "</li>";
+      //   }
+      //   instrucDisplay = "<li>" + a1[k] + ".</li>";
+      //   $("#recDirections").append(
+      //     instrucDisplay
+      //   );
+      // }
+     
       // END --- instructions WORKING ----------------------------------------3
     });
   });
