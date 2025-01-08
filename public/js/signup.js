@@ -29,10 +29,22 @@ $(document).ready(function() {
     }
   });
 
-  $("#signupSubmit").on("submit", function(event) {
+  $("#signup").on("submit", function(event) {
     event.preventDefault();
+    console.log("submit clicked");
+    
     if (form.valid()) {
       console.log("valid");
+      $.post("/api/signup", {
+        email: $("#email").val().trim(),
+        firstname: $("#firstname").val().trim(),
+        lastname: $("#lastname").val().trim(),
+        username: $("#username").val().trim(),
+        password: $("#password").val().trim()
+      }).then(function() {
+        window.location.replace("/dashboard");
+      });
+
       return true;
     } else {
       return false;

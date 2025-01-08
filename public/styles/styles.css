@@ -1,5 +1,5 @@
 h1, h2 {
-    font-family: 'Pacifico', cursive;
+    font-family: 'Pacifico', 'cursive';
     
 }
 
@@ -153,4 +153,7 @@ h2 {
     z-index: 1;
     top: 50%;
     left: 44%;
+}
+.card-content {
+min-height: 192px;
 }

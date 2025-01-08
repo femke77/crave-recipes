@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var passport = require("passport");
 
-router.post("/signup", function(req, res, next) {
+router.post("/api/signup", function(req, res, next) {
   passport.authenticate("signup", function(err, user) {
     if (err) {
       return next(err);
@@ -31,9 +31,11 @@ router.post("/api/login", function(req, res, next) {
         console.log("Error while login: " + loginerr);
         return next(loginerr);
       }
-      req.session.messages = "Login successfull";
+      req.session.messages = "Login successful";
       req.session.authenticated = true;
       req.authenticated = true;
+      console.log(req.session);
+      
       return res.redirect("/dashboard");
     });
   })(req, res, next);

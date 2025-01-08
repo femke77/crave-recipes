@@ -9,8 +9,7 @@ var apiRoutes = require("./routes/apiRoutes");
 var htmlRoutes = require("./routes/htmlRoutes");
 var db = require("./models");
 
-var PORT = process.env.PORT || 3002
-;
+var PORT = process.env.PORT || 3002;
 
 //For BodyParser
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -9,37 +9,37 @@
         </div>
         <div class="section">
             <!-- Start Search  -->
-            <div class="box">
+            {{!-- <form id="search-form" class="box">
                 <div class="field has-addons">
                     <div class="control is-expanded">
                         <input class="input has-text-centered" id="searchInput" type="search"
                             placeholder="What are you craving?">
                     </div>
                     <div class="control">
-                        <a class="button is-info" id="searchButton">Search</a>
+                        <button class="button is-info" type="submit" id="searchButton">Search</button>
                     </div>
                 </div>
-            </div>
+            </form> --}}
             <!-- End Search  -->
 
             <!-- Multiline columns means they stack once width of screen is filled  -->
             <div class="container has-text-centered">
-            
+
                 <h2>Hello {{name.firstName}}!</h2>
-                <h2>Your Crave Faves</h2>
+                <h2>Your Saved Crave Faves</h2>
                 <br>
             </div>
             <div class="columns is-multiline" id="recipesBody">
-               
+
             </div>
-             
-            
+
+
         </div>
     </div>
 </div>
 
 
-{{!-- modal  --}}
+{{!-- modal --}}
 <div class="modal" id="recipeNotes">
     <div class="modal-background"></div>
     <div class="modal-card">
@@ -57,21 +57,21 @@
                 </div>
             </div>
         </section>
-        {{!-- End Content  --}}
+        {{!-- End Content --}}
         <footer class="modal-card-foot">
             <button class="button is-info" id="saveNote">Save changes</button>
             <button class="button" id="closeModal">Cancel</button>
         </footer>
     </div>
 </div>
-{{!-- end modal  --}}
+{{!-- end modal --}}
 
 {{!-- Notification --}}
 <div class="notification is-info is-light">
-  <button class="delete"></button>
-  Recipe successfully saved!
+    <button class="delete"></button>
+    Recipe successfully saved!
 </div>
 
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="/js/dashboard.js"></script>
+<script src="/js/index.js"></script>

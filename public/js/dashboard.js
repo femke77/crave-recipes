@@ -1,6 +1,5 @@
 $(document).ready(function() {
-  $("#dash").show();
-  $("#logout").show();
+
   $(".notification").hide();
 
   // On search button click logged in version
@@ -21,8 +20,9 @@ $(document).ready(function() {
         const element = response[i];
 
         $("#recipesBody").append(
-          `<div class="column is-one-third" id="${element.id}">
-                <div class="card large recipe-card" >
+          `<div class="column is-one-third is-fullheight is-align-items-stretch is-flex" id="${element.id}">
+            <a href="/full-recipe/${element.id}">      
+          <div class="card large recipe-card" >
                     <div class="card-image">
                         <figure class="image">
                             <!-- image  -->
@@ -44,6 +44,7 @@ $(document).ready(function() {
                         </div>
                     </div>
                 </div>
+                </a>   
                 <footer class="card-footer">
                   <div >
                     <a class="card-footer-item" id="saveRecipe" data-id="${element.id}">Save to Faves</a>
@@ -59,7 +60,7 @@ $(document).ready(function() {
   //save recipe
   $(document).on("click", "#saveRecipe", function() {
     var currentRecipe = $(this).attr("data-id");
-    $.get("/user").then(function(user) {
+    $.get("/api/user").then(function(user) {
       var userId = user.id;
       $.post("/api/save/" + userId + "/" + currentRecipe, {}).then(function() {
         console.log("saved");
@@ -72,7 +73,7 @@ $(document).ready(function() {
   });
 
   // On dashboard load display the user's saved recipes
-  $.get("/user").then(function(user) {
+  $.get("/api/user").then(function(user) {
     var userid = user.id;
     //Send the GET request to saves table
     $.ajax("/api/saved/" + userid, {
@@ -85,15 +86,16 @@ $(document).ready(function() {
 
         // Append recipe cards  to recipe container
         $("#recipesBody").append(
-          `<div class="column is-one-third " id="${element.id}">
-                    <div class="card large recipe-card ">
+          `<div class="column is-one-third is-fullheight is-align-items-stretch is-flex" id="${element.id}">
+                
+               <div class="card large recipe-card ">
                         <div class="card-image">
                             <figure class="image">
                                 <!-- image  -->
                                 <img src="${element.image}" />
                             </figure>
                         </div>
-                        <div class="card-content">
+                        <div class="card-content isFullHeight">
                             <div class="media">
                                 <div class="media-content">
                                     <p class="title is-4 no-padding">
@@ -106,11 +108,12 @@ $(document).ready(function() {
                                 <p>Serves: ${element.servings}</p>
     
                             </div>
-                        </div>
+                          </div>
+                        </a>  
+                        <footer class="card-footer ">
+                            <a class="card-footer-item" id="removeSaved" data-id="${element.id}">Remove from Faves</a>        
+                        </footer>
                     </div>
-                    <footer class="card-footer">
-                        <a class="card-footer-item" id="removeSaved" data-id="${element.id}">Remove from Faves</a>        
-                    </footer>
                 </div>`
         );
       }
@@ -120,6 +123,8 @@ $(document).ready(function() {
   // Card click to display recipe detail view
   // this must be moved to a different hbs file
   $(document.body).on("click", ".recipe-card", function() {
+
+   
     var recipeId = $(this)
       .parent()
       .attr("id");
@@ -133,6 +138,7 @@ $(document).ready(function() {
       const valuesIng = Object.values(element.ingredients);
       //attach recipe data to modal for use with notes
       $("#saveNote").data("recipeData", element);
+      $("#removeNote").data("recipeData", element);
       //attach recipe data to recipeBody div
       $("#recipesBody").data("recipeData", element);
       //get the note and the id if it exists.
@@ -165,7 +171,7 @@ $(document).ready(function() {
                 </div>
                 <footer class="card-footer" >
                     <a class="card-footer-item" data-noteId=${noteId} id="openModal">Add or Edit Note</a>
-                    <a class="card-footer-item" data-noteId=${noteId} id="removeNote">Remove Note</a>
+                    <a class="card-footer-item" data-noteId=${noteId} data-recipeId=${element.id} id="removeNote">Remove Note</a>
                 </footer>
                 </div>
             </div>
@@ -243,7 +249,7 @@ $(document).ready(function() {
   $(document).on("click", "#removeSaved", function() {
     //get recipe id
     var recipeId = $(this).attr("data-id");
-    $.get("/user").then(function(user) {
+    $.get("/api/user").then(function(user) {
       var userId = user.id;
       //ajax call to delete
       $.ajax({
@@ -256,7 +262,7 @@ $(document).ready(function() {
           url: "/api/note/" + userId + "/" + recipeId
         }).then(function() {
           console.log("note deleted");
-          location.reload(true);
+          location.reload();
         });
       });
     });
@@ -269,7 +275,7 @@ $(document).ready(function() {
     //get the recipe id from the recipe's modal
     var currentRecipe = $(this).data("recipeData");
     //get the user id from session
-    $.get("/user").then(function(user) {
+    $.get("/api/user").then(function(user) {
       var noteObj = {
         note: note,
         RecipeId: currentRecipe.id,
@@ -280,17 +286,24 @@ $(document).ready(function() {
         type: "put",
         url: "/api/note",
         data: noteObj
-      });
+      }) // need to put the note on the page without a reload!
+      .then(function(){
+        getSavedRecipeWithNotes(currentRecipe.id)
+      })
     });
   });
 
   $(document.body).on("click", "#removeNote", function() {
+    var currentRecipeId = $(this).attr("data-recipeId");
+    console.log(currentRecipeId);
+    
     var noteId = $(this).attr("data-noteId");
     $.ajax({
       type: "delete",
       url: "/api/note/" + noteId
     }).then(function() {
       console.log("note deleted");
+      getSavedRecipeWithNotes(currentRecipeId);
     });
   });
 
@@ -320,4 +333,134 @@ $(document).ready(function() {
     $(".modal").removeClass("is-active");
     $(".notification").hide();
   });
+
+
+
+
+
+
+
+
+  function getSavedRecipeWithNotes(recipeId) {
+
+   
+    // var recipeId = $(this)
+    //   .parent()
+    //   .attr("id");
+    // Send the GET request with recipeId
+    $.ajax("/api/recipe-detailed/" + recipeId, {
+      type: "GET"
+    }).then(function(response) {
+      $("#recipesBody").empty();
+      const element = response;
+      // Handling ingredients list
+      const valuesIng = Object.values(element.ingredients);
+      //attach recipe data to modal for use with notes
+      $("#saveNote").data("recipeData", element);
+      //attach recipe data to recipeBody div
+      $("#recipesBody").data("recipeData", element);
+      //get the note and the id if it exists.
+      const note = element.Notes.length > 0 ? element.Notes[0].note : "";
+      const noteId = element.Notes.length > 0 ? element.Notes[0].id : 0;
+      // Append to body
+      $("#recipesBody").append(
+        `<div class="column is-one-quarter">
+          <div class="card large">
+              <div class="card-image">
+                  <figure class="image">
+                      <!-- image  -->
+                      <img src="${element.image}" />
+                  </figure>
+              </div>
+              <div class="card-content">
+                    <div class="media">
+                        <div class="media-content">
+                            <p class="title is-4 no-padding">
+                                ${element.title}
+                            </p>
+                          <p class="subtitle is-6">Dish type: ${element.dishType}</p>
+                        </div>
+                    </div>
+                    <div class="content">
+                        <p>Serves: ${element.servings}</p>
+
+                    </div>
+                    </div>
+                </div>
+                <footer class="card-footer" >
+                    <a class="card-footer-item" data-noteId=${noteId} id="openModal">Add or Edit Note</a>
+                    <a class="card-footer-item" data-noteId=${noteId} data-recipeId=${element.id} id="removeNote">Remove Note</a>
+                </footer>
+                </div>
+            </div>
+
+            <!-- Card two -->
+            <div class="column is-one-quarter">
+                <div class="card large">
+                    <div class="card-content">
+                        <div class="media">
+                            <div class="media-content">
+                                <p class="title is-4 no-padding">Ingredients</p>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <ul id="recList"></ul >
+                        </div >
+                    </div >
+                </div >
+            </div >
+
+          <!-- Card three -->
+            <div class="column is-one-quarter">
+              <div class="card large">
+                <div class="card-content">
+                  <div class="media">
+                    <div class="media-content">
+                      <p class="title is-4 no-padding">Directions</p>
+                      <hr>
+                                </div>
+                    </div>
+                    <div class="content">
+                      <ol id="recDirections">
+                      </ol>
+                    </div>
+                  </div>
+                </div>
+              </div> 
+
+              <!-- Card four -->
+              <div class="column is-one-quarter">
+              <div class="card large note">
+                  <div class="card-content">
+                      <div class="media">
+                          <div class="media-content">
+                              <p class="title is-4 no-padding">Notes</p>
+                            <hr>
+                            ${note}
+                        </div>
+                      </div>
+                    <div class="content">
+                    </div>
+                  </div>
+                </div>
+                </div>
+                `
+      );
+      // Handles list of ingredients
+      for (let j = 0; j < valuesIng.length; j++) {
+        const ing = "<li>" + valuesIng[j] + "</li>";
+        $("#recList").append(ing);
+      }
+      // Handles list of instructions
+      var instructions = element.instructions;
+      var a1 = new Array();
+      a1 = instructions.split(".");
+      for (let k = 0; k < a1.length - 1; k++) {
+        const instrucDisplay = "<li>" + a1[k] + "</li>";
+        $("#recDirections").append(instrucDisplay);
+      }
+    });
+  }
+  
 }); //end doc ready fn

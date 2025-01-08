@@ -19,6 +19,11 @@ router.post("/api/submission", (req, res) => {
   });
 });
 
+// Get user information
+router.get("/api/user", (req, res) => {
+  res.json(req.user)
+})
+
 router.post("/api/newrecipe", (req,res)=> {
   db.Recipe.create(req.body).then(function() {
     res.status(201).end();
@@ -38,7 +43,7 @@ router.delete("/api/saved/:userId/:recipeId", (req, res) => {
 });
 
 //gets the recipes saved by the user using the user id
-router.get("/api/saved/:userId", (req, res) => {
+router.get("/api/saved/:userId", (req, res) => { 
   db.User.findOne({
     where: {
       id: req.params.userId
@@ -168,7 +173,7 @@ router.get("/api/note/:recipeId/:userId", (req, res) => {
 //all hits that match category (cuisine type) or keyword as substring anywhere in title
 router.get("/api/search/:keyword", (req, res) => {
   var keyword = "%" + req.params.keyword + "%";
-  console.log(req.params.keyword);
+
   db.Recipe.findAll({
     where: {
       [Op.or]: [

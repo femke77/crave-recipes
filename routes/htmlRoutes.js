@@ -3,7 +3,7 @@ var router = express.Router();
 var db = require("../models");
 
 function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
+  if (req.isAuthenticated()) {   
     return next();
   }
   res.redirect("/");
@@ -14,31 +14,36 @@ router.get("/signup", (req, res) => {
 });
 
 router.get("/dashboard", isLoggedIn, function(req, res) {
-  var user = {
-    name: req.user
-  };
-  res.render("dashboard", user);
+
+  res.render("dashboard", {name: req.user, loggedIn: true});
 });
 
-router.get("/user", isLoggedIn, function(req, res) {
-  console.log(req.user);
-  res.json(req.user);
-});
 
 //on landing page, render the index.hbs file with x number of random recipes from the db
 router.get("/", (req, res) => {
+
   db.Recipe.findAll({
     order: db.sequelize.random(),
-    limit: 3
+    limit: 12
   }).then(function(recipes) {
-    var hbsObject = {
-      recipes: recipes
-    };
-    console.log(hbsObject);
-    res.render("index", hbsObject);
+
+    res.render("index", {recipes: recipes, loggedIn: req.isAuthenticated()});
   });
 });
 
+router.get("/full-recipe/:id", (req, res) => {
+  db.Recipe.findOne({
+    where: {
+      id: req.params.id
+    }
+  }).then(function (recipe) {
+    const fullRecipe = recipe.get({ plain: true });
+
+    
+    res.render("fullRecipe", {recipe: fullRecipe, loggedIn: req.isAuthenticated()});
+
+  });
+});
 router.get("/create", (req, res) => {
   //show form to make a new recipe
   res.render("createRecipe");

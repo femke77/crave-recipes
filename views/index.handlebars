@@ -1,3 +1,5 @@
+<input type="hidden" id="loggedIn" value={{loggedIn}}>
+
 <div class="container">
     <!-- Start Body  -->
     <div class="container">
@@ -9,18 +11,23 @@
         </div>
         <div class="section">
             <!-- Start Search  -->
-            <div class="box">
+            <form id="search-form" class="box">
                 <div class="field has-addons">
                     <div class="control is-expanded">
                         <input class="input has-text-centered" id="searchInput" type="search"
                             placeholder="What are you craving?">
                     </div>
                     <div class="control">
-                        <a class="button is-info" id="searchButton">Search</a>
+                        <button class="button is-info" type="submit" id="searchButton">Search</button>
                     </div>
                 </div>
-            </div>
+            </form>
             <!-- End Search  -->
+            {{#if loggedIn}}
+            <div class="container has-text-centered">
+       <h2 class="m-2 mb-5">Find new favorites!</h2>
+       </div>
+            {{else}}
             <!-- Login  -->
             <div class="container">
                 <div class="columns is-centered">
@@ -61,13 +68,14 @@
                     </div>
                 </div>
             </div>
+            {{/if}}
             <!-- End Login  -->
             <!-- Multiline columns means they stack once width of screen is filled  -->
             <div class="columns is-multiline" id="recipesBody">
                 {{#each recipes}}
                 <!-- Card One -->
                 <div class="column is-one-third recipe-card" id="{{dataValues.title}}">
-                    <div class=" card large" id={{dataValues.id}}>
+                    <a class="recipe card large" href="/full-recipe/{{dataValues.id}}">
                         <div class="card-image">
                             <figure class="image">
                                 <!-- image  -->
@@ -88,9 +96,14 @@
 
                             </div>
                         </div>
-                    </div>
+                    </a>
                     <footer class="card-footer">
-                        {{!-- <a href="#" class="card-footer-item">Save Recipe</a> --}}
+                     
+                       {{#if ../loggedIn}}
+                        <a class="card-footer-item" id="saveRecipe" data-id={{dataValues.id}}>Save to Faves</a>
+
+        
+                        {{/if}}
                     </footer>
                 </div>
 
@@ -99,7 +112,14 @@
         </div>
     </div>
 </div>
+{{!-- TODO abstract to a partial --}}
+{{!-- Notification --}}
+<div class="notification is-info is-light">
+      <button class="delete"></button>
+    Recipe successfully saved!
+</div>
 
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
 <script src="/js/index.js"></script>
+<script src="/js/saveRecipe.js"></script>

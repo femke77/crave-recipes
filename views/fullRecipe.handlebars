@@ -1,0 +1,115 @@
+<div class="container">
+    <!-- Start Body  -->
+    <div class="container">
+        <!-- Awesome Moving Bg -->
+        <div id="flow">
+            <span class="flow-1"></span>
+            <span class="flow-2"></span>
+            <span class="flow-3"></span>
+        </div>
+        <div class="section">
+            <!-- Start Search  -->
+             {{!-- <form id="search-form" class="box">
+                <div class="field has-addons">
+                    <div class="control is-expanded">
+                        <input class="input has-text-centered" id="searchInput" type="search"
+                            placeholder="What are you craving?">
+                    </div>
+                    <div class="control">
+                        <button class="button is-info" type="submit" id="searchButton">Search</button>
+                    </div>
+                </div>
+            </form> --}}
+            <!-- End Search  -->
+
+            <!-- Multiline columns means they stack once width of screen is filled  -->
+            <div class="container has-text-centered">
+
+
+            </div>
+            <div class="">
+                {{#if loggedIn}}
+                <a class="card-footer-item" id="saveRecipe" data-id={{recipe.id}}>Save to Faves</a>
+                {{/if}}
+            </div>
+            <div class="columns is-multiline" id="recipesBody">
+                
+                <div class="column is-one-third is-fullheight is-align-items-stretch is-flex">
+                    <div class="card large al align-items-stretch h-100tems-stretch h-100">
+                        <div class="card-image">
+                            <figure class="image">
+                                <!-- image  -->
+                                <img src={{recipe.image}} />
+                            </figure>
+                        </div>
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-content">
+                                    <p class="title is-4 no-padding">
+                                        {{recipe.title}}
+                                    </p>
+                                    <p class="subtitle is-6">Dish type: {{recipe.dishType}}</p>
+                                </div>
+                            </div>
+                            <div class="content">
+                                <p>Serves: {{recipe.servings}}</p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="card-footer">
+
+                    </footer>
+                </div>
+                <!-- Card two -->
+                <div class="column is-one-third is-fullheight is-align-items-stretch is-flex">
+                    <div class="card large">
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-content">
+                                    <p class="title is-4 no-padding">Ingredients</p>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="content">
+                                <ul id="recList">
+                                    {{#each recipe.ingredients}}
+                                    <li>{{this}}</li>
+                                    {{/each}}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{!-- Card three --}}
+                <div class="column is-one-third is-fullheight is-align-items-stretch is-flex">
+                    <div class="card large">
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-content">
+                                    <p class="title is-4 no-padding">Directions</p>
+                                    <hr>
+                                </div>
+                            </div>
+                            <div class="content">         
+                                    {{{recipe.instructions}}}   
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+</div>
+{{!-- abstract a partial --}}
+<div class="notification is-info is-light">
+      <button class="delete"></button>
+    Recipe successfully saved!
+</div>
+<script src="/js/saveRecipe.js"></script>
