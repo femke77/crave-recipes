@@ -88,6 +88,7 @@ $(document).ready(function () {
             `<div class="column is-one-third is-fullheight is-align-items-stretch is-flex" id="${element.id}">
                 
                <div class="card large recipe-card ">
+                <div class="recipe-full">
                         <div class="card-image">
                             <figure class="image">
                                 <!-- image  -->
@@ -108,11 +109,11 @@ $(document).ready(function () {
     
                             </div>
                           </div>
-                        </a>  
-                        <footer class="card-footer ">
+                      </div> 
+                        <footer class="card-footer">
                             <a class="card-footer-item" id="removeSaved" data-id="${element.id}">Remove from Faves</a>        
                         </footer>
-                    </div>
+                        </div>
                 </div>`
           );
         }
@@ -122,8 +123,8 @@ $(document).ready(function () {
 
   // Card click to display recipe detail view
 
-  $(document.body).on("click", ".recipe-card", function () {
-    var recipeId = $(this).parent().attr("id");
+  $(document.body).on("click", ".recipe-full", function () {
+    var recipeId = $(this).parent().parent().attr("id");
     getSavedRecipeWithNotes(recipeId);
   });
 
