@@ -11,6 +11,9 @@ h2 {
     font-size: 27pt;
 }
 
+.cookie {
+    min-height: 91px;
+}
 .card {
     overflow: hidden
 }
@@ -140,7 +143,7 @@ h2 {
     background-color: #DEF4FF
 }
 
-.error-class{
+.error-class, .error{
     color: red;
 }
 

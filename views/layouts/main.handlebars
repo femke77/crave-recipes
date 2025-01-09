@@ -7,7 +7,7 @@
   <!-- Viewport required with Bulma  -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Crave Recipes</title>
-
+  <link rel="icon" href="images/cookie.svg" type="image/x-icon">
   <!-- Styling (Bulma, Font Awesome, Custom -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
   <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
@@ -28,7 +28,8 @@
         <a class="navbar-item" href="/">
 
           <!-- Cookie  -->
-          <i class="fas fa-cookie-bite fa-5x"></i>
+          <img class="cookie" src="images/cookie.png" alt="Cookie" height="91px" width="94px">
+          {{!-- <i class="fas fa-cookie-bite fa-5x"></i> --}}
         </a>
         <h1>Crave Recipes</h1>
         <span class="navbar-burger burger" data-target="navbarMenu">
@@ -39,20 +40,23 @@
       </div>
       <div id="navbarMenu" class="navbar-menu">
         <div class="navbar-end">
-    {{#if loggedIn}}
-          <a href="/dashboard" class="navbar-item" >
-            Dashboard
+          <a href="/" class="navbar-item">
+            Find Recipes
+          </a>
+          <a href="/create" class="navbar-item">
+            Submit a Recipe
+          </a>
+          {{!-- <a href="/about" class="navbar-item">
+            About us
+          </a> --}}
+          {{#if loggedIn}}
+          <a href="/dashboard" class="navbar-item">
+            My Saved Recipes
           </a>
           <a href="/logout" class="navbar-item">
             Log Out
           </a>
-    {{/if}}
-          <a href="/create" class="navbar-item">
-            Create a Recipe
-          </a>
-          <a href="/about" class="navbar-item">
-            About us
-          </a>
+          {{/if}}
         </div>
       </div>
 
@@ -72,9 +76,10 @@
         Santos.
       </div>
     </div>
-    {{#unless process.env.NODE_ENV}}
+    </br>
+    <p>This button adds 10 more recipes to the db from Spoonacular</p>
     <button id="btn">Seed Database</button>
-    {{/unless}}
+
   </footer>
 
 

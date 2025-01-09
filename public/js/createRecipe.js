@@ -44,7 +44,7 @@ $(document).ready(function() {
         ingredientJSON["ingredient_" + count++] = $(this).val();
       });
       //get the user id from session else null is allowed
-      $.get("/user")
+      $.get("/api/user")
         .then(function(user) {
           return user.id;
         })

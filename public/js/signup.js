@@ -1,7 +1,4 @@
 $(document).ready(function() {
-  //add jquery validation
-  $("#dash").hide();
-  $("#logout").hide();
 
   $("#cancel").on("click", function() {
     console.log("you clicked on me");
@@ -30,11 +27,8 @@ $(document).ready(function() {
   });
 
   $("#signup").on("submit", function(event) {
-    event.preventDefault();
-    console.log("submit clicked");
-    
+    event.preventDefault(); 
     if (form.valid()) {
-      console.log("valid");
       $.post("/api/signup", {
         email: $("#email").val().trim(),
         firstname: $("#firstname").val().trim(),

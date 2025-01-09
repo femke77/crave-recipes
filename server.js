@@ -8,6 +8,7 @@ var authRoutes = require("./routes/user");
 var apiRoutes = require("./routes/apiRoutes");
 var htmlRoutes = require("./routes/htmlRoutes");
 var db = require("./models");
+var helpers = require("./utils/helpers");
 
 var PORT = process.env.PORT || 3002;
 
@@ -18,7 +19,7 @@ app.use(bodyParser.json());
 app.engine(
   "handlebars",
   exphbs({
-    defaultLayout: "main"
+    defaultLayout: "main", helpers: helpers
   })
 );
 app.set("view engine", "handlebars");

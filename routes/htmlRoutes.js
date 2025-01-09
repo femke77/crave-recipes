@@ -46,7 +46,7 @@ router.get("/full-recipe/:id", (req, res) => {
 });
 router.get("/create", (req, res) => {
   //show form to make a new recipe
-  res.render("createRecipe");
+  res.render("createRecipe", {loggedIn: req.isAuthenticated()});
 });
 
 router.get("*", (req, res) => {

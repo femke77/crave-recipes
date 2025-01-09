@@ -83,9 +83,9 @@ $(document).ready(function () {
                       </a>
                       </div>
                       <footer class="card-footer">
-                          <div >
-                            <a class="card-footer-item" id="saveRecipe" data-id="${element.id}">Save to Faves</a>
-                          </div>
+                       
+                            <a class="card-footer-item " id="saveRecipe" data-id="${element.id}">Save to Faves</a>
+                     
                         </footer>
                   </div>`
           );
