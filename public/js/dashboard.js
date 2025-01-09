@@ -1,19 +1,16 @@
-$(document).ready(function() {
-
+$(document).ready(function () {
   $(".notification").hide();
 
   // On search button click logged in version
-  $("#searchButton").on("click", function() {
+  $("#searchButton").on("click", function () {
     // Grab input from search
-    var keyword = $("#searchInput")
-      .val()
-      .trim();
+    var keyword = $("#searchInput").val().trim();
     $("#searchInput").val("");
 
     //Send the GET request.
     $.ajax("/api/search/" + keyword, {
-      type: "GET"
-    }).then(function(response) {
+      type: "GET",
+    }).then(function (response) {
       $("#recipesBody").empty();
 
       for (let i = 0; i < response.length; i++) {
@@ -58,14 +55,14 @@ $(document).ready(function() {
   // End Search Click
 
   //save recipe
-  $(document).on("click", "#saveRecipe", function() {
+  $(document).on("click", "#saveRecipe", function () {
     var currentRecipe = $(this).attr("data-id");
-    $.get("/api/user").then(function(user) {
+    $.get("/api/user").then(function (user) {
       var userId = user.id;
-      $.post("/api/save/" + userId + "/" + currentRecipe, {}).then(function() {
+      $.post("/api/save/" + userId + "/" + currentRecipe, {}).then(function () {
         console.log("saved");
         $(".notification").show();
-        setTimeout(function() {
+        setTimeout(function () {
           $(".notification").hide();
         }, 3000);
       });
@@ -73,20 +70,22 @@ $(document).ready(function() {
   });
 
   // On dashboard load display the user's saved recipes
-  $.get("/api/user").then(function(user) {
+  $.get("/api/user").then(function (user) {
     var userid = user.id;
     //Send the GET request to saves table
     $.ajax("/api/saved/" + userid, {
-      type: "GET"
-    }).then(function(response) {
-      $("#recipesBody").empty();
+      type: "GET",
+    }).then(function (response) {
+      if (response.length === 0) {
+        $("#recipesBody").append("<h3>No saved recipes yet!</h3>");
+      } else {
+        $("#recipesBody").empty();
+        for (let i = 0; i < response.length; i++) {
+          const element = response[i];
 
-      for (let i = 0; i < response.length; i++) {
-        const element = response[i];
-
-        // Append recipe cards  to recipe container
-        $("#recipesBody").append(
-          `<div class="column is-one-third is-fullheight is-align-items-stretch is-flex" id="${element.id}">
+          // Append recipe cards  to recipe container
+          $("#recipesBody").append(
+            `<div class="column is-one-third is-fullheight is-align-items-stretch is-flex" id="${element.id}">
                 
                <div class="card large recipe-card ">
                         <div class="card-image">
@@ -115,36 +114,35 @@ $(document).ready(function() {
                         </footer>
                     </div>
                 </div>`
-        );
+          );
+        }
       }
     });
   });
 
   // Card click to display recipe detail view
 
-  $(document.body).on("click", ".recipe-card", function() {  
-    var recipeId = $(this)
-      .parent()
-      .attr("id");
-      getSavedRecipeWithNotes(recipeId); 
+  $(document.body).on("click", ".recipe-card", function () {
+    var recipeId = $(this).parent().attr("id");
+    getSavedRecipeWithNotes(recipeId);
   });
 
   //remove recipe from favorites. Includes removing the note they stored.
-  $(document).on("click", "#removeSaved", function() {
+  $(document).on("click", "#removeSaved", function () {
     //get recipe id
     var recipeId = $(this).attr("data-id");
-    $.get("/api/user").then(function(user) {
+    $.get("/api/user").then(function (user) {
       var userId = user.id;
       //ajax call to delete
       $.ajax({
         type: "delete",
-        url: "/api/saved/" + userId + "/" + recipeId
-      }).then(function() {
+        url: "/api/saved/" + userId + "/" + recipeId,
+      }).then(function () {
         console.log("removed");
         $.ajax({
           type: "delete",
-          url: "/api/note/" + userId + "/" + recipeId
-        }).then(function() {
+          url: "/api/note/" + userId + "/" + recipeId,
+        }).then(function () {
           console.log("note deleted");
           location.reload();
         });
@@ -152,85 +150,75 @@ $(document).ready(function() {
     });
   });
 
-  $("#saveNote").on("click", function() {
-    var note = $("#userNotes")
-      .val()
-      .trim();
+  $("#saveNote").on("click", function () {
+    var note = $("#userNotes").val().trim();
     //get the recipe id from the recipe's modal
     var currentRecipe = $(this).data("recipeData");
     //get the user id from session
-    $.get("/api/user").then(function(user) {
+    $.get("/api/user").then(function (user) {
       var noteObj = {
         note: note,
         RecipeId: currentRecipe.id,
-        UserId: user.id
+        UserId: user.id,
       };
       //upsert the note data by unique key recipeId and userId
       $.ajax({
         type: "put",
         url: "/api/note",
-        data: noteObj
+        data: noteObj,
       }) // need to put the note on the page without a reload!
-      .then(function(){
-        getSavedRecipeWithNotes(currentRecipe.id)
-      })
+        .then(function () {
+          getSavedRecipeWithNotes(currentRecipe.id);
+        });
     });
   });
 
-  $(document.body).on("click", "#removeNote", function() {
+  $(document.body).on("click", "#removeNote", function () {
     var currentRecipeId = $(this).attr("data-recipeId");
     console.log(currentRecipeId);
-    
+
     var noteId = $(this).attr("data-noteId");
     $.ajax({
       type: "delete",
-      url: "/api/note/" + noteId
-    }).then(function() {
+      url: "/api/note/" + noteId,
+    }).then(function () {
       console.log("note deleted");
       getSavedRecipeWithNotes(currentRecipeId);
     });
   });
 
   // modal and notification code
-  $(document.body).on("click", "#openModal", function() {
+  $(document.body).on("click", "#openModal", function () {
     $(".modal").addClass("is-active");
     //fill modal content with the current note if present
     var noteId = $(this).attr("data-noteId");
     console.log(noteId);
-    $.get("/api/note/" + noteId).then(function(note) {
+    $.get("/api/note/" + noteId).then(function (note) {
       if (note) {
         $("#userNotes").append(note.note);
       }
     });
   });
 
-  $(document.body).on("click", "#closeModal", function() {
+  $(document.body).on("click", "#closeModal", function () {
     $(".modal").removeClass("is-active");
   });
 
-  $(document.body).on("click", "#saveNote", function() {
+  $(document.body).on("click", "#saveNote", function () {
     $(".modal").removeClass("is-active");
   });
 
   // on click of the closing X in the upper right of modal or notification
-  $(document.body).on("click", ".delete", function() {
+  $(document.body).on("click", ".delete", function () {
     $(".modal").removeClass("is-active");
     $(".notification").hide();
   });
 
-
-
-
-
-
-
-
   function getSavedRecipeWithNotes(recipeId) {
-
     // Send the GET request with recipeId
     $.ajax("/api/recipe-detailed/" + recipeId, {
-      type: "GET"
-    }).then(function(response) {
+      type: "GET",
+    }).then(function (response) {
       $("#recipesBody").empty();
       const element = response;
       // Handling ingredients list
@@ -342,5 +330,4 @@ $(document).ready(function() {
       }
     });
   }
-  
 }); //end doc ready fn

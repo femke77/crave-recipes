@@ -1,4 +1,4 @@
-h1, h2 {
+h1, h2, h3 {
     font-family: 'Pacifico', 'cursive';
     
 }
@@ -9,6 +9,9 @@ h1 {
 
 h2 {
     font-size: 27pt;
+}
+h3{
+    font-size: 20pt;
 }
 
 .cookie {
@@ -159,4 +162,9 @@ h2 {
 }
 .card-content {
 min-height: 192px;
+}
+
+
+.dashboard {
+    min-height: 400px;
 }
