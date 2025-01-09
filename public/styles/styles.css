@@ -1,6 +1,8 @@
-h1, h2, h3 {
+h1,
+h2,
+h3 {
     font-family: 'Pacifico', 'cursive';
-    
+
 }
 
 h1 {
@@ -10,13 +12,15 @@ h1 {
 h2 {
     font-size: 27pt;
 }
-h3{
+
+h3 {
     font-size: 20pt;
 }
 
 .cookie {
     min-height: 91px;
 }
+
 .card {
     overflow: hidden
 }
@@ -90,6 +94,7 @@ h3{
         -o-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     to {
         -ms-transform: rotate(360deg);
         -moz-transform: rotate(360deg);
@@ -107,6 +112,7 @@ h3{
         -o-transform: rotate(0deg);
         transform: rotate(0deg);
     }
+
     to {
         -ms-transform: rotate(360deg);
         -moz-transform: rotate(360deg);
@@ -129,7 +135,8 @@ h3{
     color: lemonchiffon;
 }
 
-.footer p, strong {
+.footer p,
+strong {
     color: lemonchiffon
 }
 
@@ -146,22 +153,31 @@ h3{
     background-color: #DEF4FF
 }
 
-.error-class, .error{
+.error-class,
+.error {
     color: red;
 }
 
-.valid-class{
+.valid-class {
     color: black;
 }
 
 .notification {
-    position: absolute;
-    z-index: 1;
+    position: fixed;
     top: 50%;
-    left: 44%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    text-align: center;
 }
+
 .card-content {
-min-height: 192px;
+    min-height: 192px;
 }
 
 
